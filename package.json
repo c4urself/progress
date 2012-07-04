@@ -1,0 +1,21 @@
+{
+  "author": "Christian Verkerk",
+  "name": "progress",
+  "description": "A utility to track task progress",
+  "version": "0.0.0",
+  "homepage": "https://github.com/c4urself/progress.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/c4urself/progress.git"
+  },
+  "main": "./lib/cli",
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
