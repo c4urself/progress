@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+/*!
+ * progress - Track your task progress
+ *
+ * Christian Verkerk <christian.verkerk@gmail.com>
+ * MIT License.
+ */
+
+'use strict';
+
+/**
+ * Module dependencies
+ */
+var fs = require('fs'),
+    version = require('../lib/version'),
+    program = require('commander'),
+    colors = require('colors'),
+    progress = require('../lib/progress'),
+    res;
+
+colors.setTheme({
+    input: 'grey',
+    verbose: 'cyan',
+    info: 'green',
+    data: 'grey',
+    help: 'cyan',
+    warn: 'yellow',
+    debug: 'blue',
+    error: 'red'
+});
+
+program
+    .version(version)
+    .usage('[options]')
+    .option('-s, --start <description>', 'starts a new task', '')
+    .option('-f, --fock <description>', 'forks a new subtask', '')
+    .option('-a, --add <description>', 'adds a new note', '')
+    .option('-x, --stop <description>', 'stops a (sub)task', '')
+    .option('-e, --error <name>', 'tie an error to the current fork', '')
+    .option('--tree', 'displays a tree of your task')
+    .option('--status', 'shows the status of your task')
+    .parse(process.argv);
+
+var src = program.args;
+
+if (program.start) {
+    console.log("Called the --start flag".debug);
+    res = res || progress(program.start);
+}
+else if (program.fock) {
+    console.log(' - fock %s', program.fock);
+}
+else if (program.add) {
+    console.log('Adding a note'.info);
+}
+else if (program.stop) {
+    console.log('Stopping the current task'.info);
+}
+else if (program.error) {
+    console.log('Noting the error'.info);
+}
+else if (program.status) {
+    console.log(res.data);
+    console.log("You are currently working on:".info);
+    console.log("%s".warn, res.getCurrentTask());
+}
+else {
+    console.log(program.helpInformation());
+}
+
+/*
+ * Notes:
+ *
+ * - Going to write to each task in a json file in the data/ folder
+ *   - Subtask: Write to .json file!
+ */
